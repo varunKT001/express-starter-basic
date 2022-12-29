@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 5000;
 
 const express = require('express');
 const ErrorMiddleware = require('./middlewares/Error');
-const mainRouter = require('./routers/mainRouter');
+const gmailRouter = require('./routers/gmailRouter');
 const app = express();
 
 // uncaught exception
@@ -29,7 +29,7 @@ app.get('/', (req, res, next) => {
   return res.status(200).send('API service running 🚀');
 });
 
-app.use('/api', mainRouter);
+app.use('/api/gmail', gmailRouter);
 
 app.use(ErrorMiddleware);
 
