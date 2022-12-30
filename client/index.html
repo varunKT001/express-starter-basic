@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mail Sentiment Analysis</title>
+  </head>
+  <body>
+    <a href="/login"><button>Login</button></a>
+    <script>
+      window.onload = async () => {
+        try {
+          const resp = await fetch('/api/auth/profile');
+          const { data } = await resp.json();
+          if (data) window.location.href = '/dashboard';
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+    </script>
+  </body>
+</html>

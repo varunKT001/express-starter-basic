@@ -4,7 +4,12 @@ const PORT = process.env.PORT || 5000;
 
 const express = require('express');
 const ErrorMiddleware = require('./middlewares/Error');
+const authRouter = require('./routers/authRouter');
 const gmailRouter = require('./routers/gmailRouter');
+const cookieParser = require('cookie-parser');
+const connectToDatabase = require('./config/db');
+const path = require('path');
+
 const app = express();
 
 // uncaught exception
@@ -23,13 +28,26 @@ process.on('unhandledRejection', (error) => {
   });
 });
 
+connectToDatabase();
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.get('/', (req, res, next) => {
-  return res.status(200).send('API service running 🚀');
-});
-
+app.use('/api/auth', authRouter);
 app.use('/api/gmail', gmailRouter);
+
+if (process.env.NODE_ENV === 'production') {
+  const __directory = path.resolve();
+  app.use(express.static(path.join(__directory, '/client')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__directory, 'client', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('API service running 🚀');
+  });
+}
 
 app.use(ErrorMiddleware);
 

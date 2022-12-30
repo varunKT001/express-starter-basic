@@ -10,7 +10,7 @@ const path = require('path');
 
 /**
  * @desc    Test the API
- * @route   GET /test
+ * @route   GET /api/gmail/test
  * @access  public
  */
 exports.test = CatchAsyncErrors(async (req, res, next) => {
@@ -22,7 +22,7 @@ exports.test = CatchAsyncErrors(async (req, res, next) => {
 
 /**
  * @desc    Authorize the user
- * @route   GET /authorize
+ * @route   GET /api/gmail/authorize
  * @access  public
  */
 exports.authorizeUser = CatchAsyncErrors(async (req, res, next) => {
@@ -37,7 +37,7 @@ exports.authorizeUser = CatchAsyncErrors(async (req, res, next) => {
 
 /**
  * @desc    Get authentication code of user
- * @route   GET /oauth2callback
+ * @route   GET /api/gmail/oauth2callback
  * @access  public
  */
 exports.oauth2Callback = CatchAsyncErrors(async (req, res, next) => {
@@ -57,7 +57,7 @@ exports.oauth2Callback = CatchAsyncErrors(async (req, res, next) => {
 
 /**
  * @desc    Get message list of user
- * @route   GET /messages
+ * @route   GET /api/gmail/messages
  * @access  public
  */
 exports.getMessages = CatchAsyncErrors(async (req, res, next) => {
@@ -86,7 +86,7 @@ exports.getMessages = CatchAsyncErrors(async (req, res, next) => {
 
 /**
  * @desc    Get single message
- * @route   GET /messages/:id
+ * @route   GET /api/gmail/messages/:id
  * @access  public
  */
 exports.getMessage = CatchAsyncErrors(async (req, res, next) => {

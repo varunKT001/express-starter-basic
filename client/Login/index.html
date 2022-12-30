@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Mail Sentiment Analysis</title>
+  </head>
+  <body>
+    <div
+      id="g_id_onload"
+      data-client_id="810455238995-0vs1kdr3afidgb3io8rp952apjcb5bnu.apps.googleusercontent.com"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-login_uri="http://localhost:5000/api/auth/login"
+      data-nonce=""
+      data-auto_prompt="false"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-shape="rectangular"
+      data-theme="outline"
+      data-text="signin_with"
+      data-size="large"
+      data-logo_alignment="left"
+    ></div>
+    <script>
+      window.onload = async () => {
+        try {
+          const resp = await fetch('/api/auth/profile');
+          const { data } = await resp.json();
+          if (data) window.location.href = '/dashboard';
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+    </script>
+  </body>
+</html>
