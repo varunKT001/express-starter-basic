@@ -2,6 +2,7 @@ const CatchAsyncErrors = require('../middlewares/CatchAsyncErrors');
 const ErrorHandler = require('../utils/ErrorHandler');
 const User = require('../models/userModel');
 const oauth2Client = require('../oAuth/client');
+const google = require('googleapis').google;
 const scopes = require('../oAuth/scopes');
 const cookieOptions = require('../utils/cookieOptions');
 
@@ -23,36 +24,35 @@ exports.test = CatchAsyncErrors(async (req, res, next) => {
  * @access  public
  */
 exports.login = CatchAsyncErrors(async (req, res, next) => {
-  const token = req.body.credential;
-  if (!token) {
-    return next(new ErrorHandler('No credential token in post body', 400));
-  }
+  const { code } = req.query;
+  const { tokens } = await oauth2Client.getToken(code);
+  const { access_token, refresh_token } = tokens;
 
-  const csrfTokenCookie = req.cookies['g_csrf_token'];
-  if (!csrfTokenCookie) {
-    return next(new ErrorHandler('No CSRF token in Cookie', 400));
-  }
-
-  const csrfToken = req.body['g_csrf_token'];
-  if (!csrfToken) {
-    return next(new ErrorHandler('No CSRF token in post body', 400));
-  }
-
-  if (csrfToken !== csrfTokenCookie) {
-    return next(new ErrorHandler('Failed to verify double submit cookie', 400));
-  }
-
-  const ticket = await oauth2Client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
+  oauth2Client.setCredentials({
+    refresh_token,
+    access_token,
   });
 
-  const { sub, name, email, picture } = ticket.getPayload();
+  const oauth2 = google.oauth2({
+    auth: oauth2Client,
+    version: 'v2',
+  });
+
+  const { data } = await oauth2.userinfo.get();
+
+  const { id: sub, email, name, picture } = data;
 
   let newUser = null;
   const existingUser = await User.findOne({ sub });
-  if (existingUser) newUser = existingUser;
-  else newUser = await User.create({ sub, name, email, picture });
+  if (existingUser) {
+    newUser = await User.findOneAndUpdate(
+      { sub },
+      { sub, name, email, picture, refresh_token },
+      { new: true }
+    );
+  } else {
+    newUser = await User.create({ sub, name, email, picture, refresh_token });
+  }
 
   const authToken = newUser.getJwtToken();
 

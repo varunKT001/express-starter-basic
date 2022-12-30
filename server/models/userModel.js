@@ -22,6 +22,10 @@ const userModel = mongoose.Schema(
     picture: {
       type: String,
     },
+    refresh_token: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

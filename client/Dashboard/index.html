@@ -5,26 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="style.css" />
     <title>Dashboard</title>
   </head>
   <body>
-    <a href="http://localhost:5000/api/auth/logout">
-      <button>Sign Out</button></a
-    >
-    <script>
-      let user = null;
-
-      window.onload = async () => {
-        try {
-          const resp = await fetch('/api/auth/profile');
-          const { data } = await resp.json();
-
-          if (data) user = data;
-          else window.location.href = '/login';
-        } catch (error) {
-          alert(error.message);
-        }
-      };
-    </script>
+    <nav>
+      <img src="" alt="" />
+      <h2>Hi, user</h2>
+      <a href="http://localhost:5000/api/auth/logout">
+        <button>Sign Out</button></a
+      >
+    </nav>
+    <script src="script.js"></script>
   </body>
 </html>

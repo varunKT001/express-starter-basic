@@ -8,24 +8,9 @@
     <title>Mail Sentiment Analysis</title>
   </head>
   <body>
-    <div
-      id="g_id_onload"
-      data-client_id="810455238995-0vs1kdr3afidgb3io8rp952apjcb5bnu.apps.googleusercontent.com"
-      data-context="signin"
-      data-ux_mode="popup"
-      data-login_uri="http://localhost:5000/api/auth/login"
-      data-nonce=""
-      data-auto_prompt="false"
-    ></div>
-    <div
-      class="g_id_signin"
-      data-type="standard"
-      data-shape="rectangular"
-      data-theme="outline"
-      data-text="signin_with"
-      data-size="large"
-      data-logo_alignment="left"
-    ></div>
+    <a href="http://localhost:5000/api/gmail/authorize"
+      ><button>SignIn with Google</button></a
+    >
     <script>
       window.onload = async () => {
         try {

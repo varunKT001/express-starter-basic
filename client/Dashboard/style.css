@@ -1,0 +1,13 @@
+@media (min-width: 768px) {
+  nav {
+    max-width: 75%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav > img {
+    width: 35px;
+    border-radius: 50%;
+  }
+}
