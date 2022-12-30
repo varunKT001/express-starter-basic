@@ -6,6 +6,7 @@ const express = require('express');
 const ErrorMiddleware = require('./middlewares/Error');
 const authRouter = require('./routers/authRouter');
 const gmailRouter = require('./routers/gmailRouter');
+const aiRouter = require('./routers/aiRouter');
 const cookieParser = require('cookie-parser');
 const connectToDatabase = require('./config/db');
 const path = require('path');
@@ -36,6 +37,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
 app.use('/api/gmail', gmailRouter);
+app.use('/api/ai', aiRouter);
 
 if (process.env.NODE_ENV === 'production') {
   const __directory = path.resolve();

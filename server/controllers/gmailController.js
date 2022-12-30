@@ -39,7 +39,7 @@ exports.authorizeUser = CatchAsyncErrors(async (req, res, next) => {
  */
 exports.getMessages = CatchAsyncErrors(async (req, res, next) => {
   const { refresh_token } = req.user;
-  const { userId, maxResults = 5, q } = req.query;
+  const { userId, maxResults = 5, q, fields } = req.query;
 
   let url = `https://gmail.googleapis.com/gmail/v1/users/${
     userId ?? 'me'
@@ -47,6 +47,7 @@ exports.getMessages = CatchAsyncErrors(async (req, res, next) => {
 
   if (maxResults) url = url.concat(`maxResults=${maxResults}&`);
   if (q) url = url.concat(`q=${q}&`);
+  if (fields) url = url.concat(`fields=${fields}&`);
 
   oauth2Client.setCredentials({ refresh_token });
 
@@ -65,9 +66,13 @@ exports.getMessages = CatchAsyncErrors(async (req, res, next) => {
  */
 exports.getMessage = CatchAsyncErrors(async (req, res, next) => {
   const { refresh_token } = req.user;
+
+  const { fields } = req.query;
   const id = req.params.id;
 
-  const url = `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}`;
+  let url = `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?`;
+
+  if (fields) url = url.concat(`fields=${fields}&`);
 
   oauth2Client.setCredentials({ refresh_token });
 
