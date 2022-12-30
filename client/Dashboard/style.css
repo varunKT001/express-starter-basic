@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 414px) {
   nav {
     max-width: 75%;
     margin: auto;
@@ -9,5 +9,31 @@
   nav > img {
     width: 35px;
     border-radius: 50%;
+  }
+  main {
+    max-width: 75%;
+    margin: auto;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  table {
+    width: 100%;
+  }
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+  td {
+    padding: 0.5rem;
+  }
+  tr:nth-child(2n) {
+    background-color: #f0f0f0;
+  }
+  .refresh-button {
+    width: fit-content;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
   }
 }
