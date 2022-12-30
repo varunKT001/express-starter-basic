@@ -5,22 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="style.css" />
     <title>Mail Sentiment Analysis</title>
   </head>
   <body>
-    <a href="http://localhost:5000/api/gmail/authorize"
-      ><button>SignIn with Google</button></a
-    >
-    <script>
-      window.onload = async () => {
-        try {
-          const resp = await fetch('/api/auth/profile');
-          const { data } = await resp.json();
-          if (data) window.location.href = '/dashboard';
-        } catch (error) {
-          alert(error.message);
-        }
-      };
-    </script>
+    <main>
+      <div class="login">
+        <h2>Welcome to MailSentimentAnalysis</h2>
+        <p>
+          You can SignUp/SignIn securely to our application using Google oAuth
+          v2. Click on the button below to SignIn/SignUp with our Google
+          Account.
+        </p>
+        <p>
+          After selecting the desired Google Account, please allow permission to
+          access your Gmail Account
+        </p>
+        <a href="http://localhost:5000/api/gmail/authorize"
+          ><button>SignIn with Google</button></a
+        >
+      </div>
+    </main>
+    <script src="script.js"></script>
   </body>
 </html>

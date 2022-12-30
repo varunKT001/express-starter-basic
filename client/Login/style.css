@@ -1,0 +1,17 @@
+@media (min-width: 768px) {
+  main {
+    max-width: 75%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .login {
+    margin: auto;
+    padding: 2rem;
+    border: 1px solid black;
+  }
+  .login > h2 {
+    margin-top: 0;
+  }
+}
